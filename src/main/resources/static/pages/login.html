@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/login/login.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- 4种随机颜色背景切换 -->
+    <div class="color">
+        <div class="color1"></div>
+        <div class="color2"></div>
+        <div class="color3"></div>
+        <div class="color4"></div>
+    </div>
+
+    <!-- 登录与注册面板 start -->
+    <div class="panel">
+        <div class="content login">
+            <div class="switch">
+                <span id="login" class="active">Login</span>
+                <span>/</span>
+                <span id="signup">Sign Up</span>
+            </div>
+            <form id="submitId" class="" action="" method="post">
+                <div id="email" class="input" placeholder="Email">
+                    <input id="useremail" name="useremail" type="text">
+                </div>
+                <div class="input" placeholder="Username">
+                    <input id="username" name="username" type="text">
+                </div>
+                <div class="input" placeholder="Password">
+                    <input id="password" name="password" type="password">
+                </div>
+                <div id="repeat" class="input" placeholder="Repeat">
+                    <input id="repeatpw" name="repeatpw" type="password">
+                </div>
+                <span>Forget?</span>
+                <button>LOGIN</button>
+            </form>
+        </div>
+    </div>
+    <!-- 登录与注册面板 end -->
+</div>
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.5.0/jquery.min.js"></script>
+<script src="../js/login/login.js"></script>
+<script>
+    console.log($('.active'));
+</script>
+</html>

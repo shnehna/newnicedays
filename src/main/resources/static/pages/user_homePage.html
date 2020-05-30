@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="generator" content="Hugo 0.69.2"/>
+    <link rel="canonical" href="https://themes.gohugo.io//theme/cupper-hugo-theme/">
+
+
+    <meta name="description" content="An accessibility-friendly Hugo theme, ported from the original Cupper project.">
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css"
+          integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="mask-icon" href="https://themes.gohugo.io//theme/cupper-hugo-theme/safari-pinned-tab.svg"
+          color="#000000">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="../css/user/userPrism.css" media="none" onload="this.media='all';">
+    <link rel="stylesheet" type="text/css" href="../css/user/user.css">
+    <style id="inverter" media="none">
+        .intro-and-nav, .main-and-footer {
+            filter: invert(100%)
+        }
+
+        * {
+            background-color: inherit
+        }
+
+        img:not([src*=".svg"]), .colors, iframe, .demo-container {
+            filter: invert(100%)
+        }
+    </style>
+
+
+    <title>Cupper</title>
+</head>
+
+<body>
+<a href="#main">skip to content</a>
+<svg style="display: none">
+    <!-- 书签图标 start -->
+    <symbol id="bookmark" viewBox="0 0 40 50">
+        <g transform="translate(2266 3206.2)">
+            <path style="stroke:currentColor;stroke-width:3.2637;fill:none"
+                  d="m-2262.2-3203.4-.2331 42.195 16.319-16.318 16.318 16.318.2331-42.428z"/>
+        </g>
+    </symbol>
+    <!-- 书签图标 end -->
+</svg>
+
+
+<div class="wrapper">
+    <!-- 左侧用户界面 start -->
+    <header class="intro-and-nav" role="banner">
+        <div>
+            <div class="intro">
+                <a class="logo" href="" aria-label="Cupper home page">
+                    <img src="../imgs/user/Storm_Trooper_Minimalist.jpg" alt="">
+                </a>
+                <p class="library-desc">
+                    an artist</br>
+                    do one more thing
+                    <!--  <a href="https://github.com/ThePacielloGroup/cupper">original Cupper</a> project. -->
+                </p>
+            </div>
+
+            <!-- 菜单导航栏 start -->
+            <nav id="patterns-nav" class="patterns" role="navigation">
+                <h2 class="vh">Main navigation</h2>
+                <button id="menu-button" aria-expanded="false">
+                    <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false">
+                        <use xlink:href="#menu"></use>
+                    </svg>
+                    Menu
+                </button>
+
+                <ul id="patterns-list">
+                    <li class="pattern">
+                        <a href="user_homePage.html" aria-current="page">
+                            <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+                                <use xlink:href="#bookmark"></use>
+                            </svg>
+                            <span class="text">Home</span>
+                        </a>
+                    </li>
+
+                    <li class="pattern">
+                        <a href="user_blogShow.html" >
+                            <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+                                <use xlink:href="#bookmark"></use>
+                            </svg>
+                            <span class="text">Blog</span>
+                        </a>
+                    </li>
+
+                    <li class="pattern">
+                        <a href="https://themes.gohugo.io//theme/cupper-hugo-theme/tags/">
+                            <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
+                                <use xlink:href="#bookmark"></use>
+                            </svg>
+                            <span class="text">Collections</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- 菜单导航栏 end -->
+        </div>
+    </header>
+    <!-- 左侧用户界面 end -->
+
+    <!-- 主博客显示页面 start -->
+    <div class="main-and-footer">
+        <div>
+            <main id="main">
+                <h1>Home</h1>
+                <p>Welcome to <strong>Cupper</strong>: An accessibility-friendly Hugo theme, ported from the <a
+                        href="https://github.com/ThePacielloGroup/cupper">original Cupper</a> project. Here are some of
+                    its features:</p>
+                <div class="ticks">
+                    <ul>
+                        <li>Screen reader and keyboard accessible</li>
+                        <li>Responsive</li>
+                        <li>Numerous shortcodes</li>
+                        <li>Toggleable dark theme</li>
+                        <li>Toggleable table of contents per blog post</li>
+                    </ul>
+
+                </div>
+
+
+            </main>
+
+            <footer role="contentinfo">
+                <div>
+                    <label for="themer">
+                        dark theme: <input type="checkbox" id="themer" class="vh">
+                        <span aria-hidden="true"></span>
+                    </label>
+                </div>
+
+                Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a
+                    href="https://github.com/zwbetz-gh/cupper-hugo-theme">Cupper</a>. Deployed to <a
+                    href="https://www.netlify.com/">Netlify</a>.
+
+            </footer>
+
+        </div>
+    </div>
+    <!-- 主博客显示页面 end -->
+</div>
+<script src="../js/user/userDomScript.js"></script>
+<script src="../js/user/userPrism.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css"
+      integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"
+        integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij"
+        crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js"
+        integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+
+<script>
+    window.ga = window.ga || function () {
+        (ga.q = ga.q || []).push(arguments)
+    };
+    ga.l = +new Date;
+    ga('create', 'UA-123456789-1', 'auto');
+    ga('send', 'pageview');
+</script>
+<script async src='../js/user/userAnalytics.js'></script>
+
+
+</body>
+</html>

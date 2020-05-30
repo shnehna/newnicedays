@@ -1,0 +1,2400 @@
+<!doctype html>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+    <title>mysql</title>
+    <link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext'
+          rel='stylesheet' type='text/css' />
+    <style type='text/css'>
+        html {
+            overflow-x: initial !important;
+            overflow-y: initial !important;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --select-text-bg-color: #B5D6FC;
+            --select-text-font-color: auto;
+            --monospace: "Lucida Console", Consolas, "Courier", monospace;
+        }
+
+        html {
+            font-size: 14px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: auto;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            font-size: 1rem;
+            line-height: 1.42857;
+            overflow-x: hidden;
+            background: inherit;
+            tab-size: 4;
+        }
+
+        iframe {
+            margin: auto;
+        }
+
+
+
+        a:active,
+        a:hover {
+            outline: 0;
+        }
+
+        #write {
+            margin: 0 auto;
+            height: auto;
+            width: inherit;
+            word-break: normal;
+            overflow-wrap: break-word;
+            position: relative;
+            white-space: normal;
+            overflow-x: visible;
+            padding-top: 40px;
+        }
+
+        #write.first-line-indent p {
+            text-indent: 2em;
+        }
+
+        #write.first-line-indent li p,
+        #write.first-line-indent p * {
+            text-indent: 0;
+        }
+
+        #write.first-line-indent li {
+            margin-left: 2em;
+        }
+
+        .for-image #write {
+            /* padding-left: 8px; */
+            padding-right: 8px;
+        }
+
+        body.typora-export {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .typora-export .footnote-line,
+        .typora-export li,
+        .typora-export p {
+            white-space: pre-wrap;
+        }
+
+        @media screen and (max-width: 500px) {
+            body.typora-export {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            #write {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .CodeMirror-sizer {
+                margin-left: 0 !important;
+            }
+
+            .CodeMirror-gutters {
+                display: none !important;
+            }
+        }
+
+        #write li>figure:last-child {
+            margin-bottom: 0.5rem;
+        }
+
+        #write ol,
+        #write ul {
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            color: inherit;
+            font: inherit;
+        }
+
+        input[type="checkbox"],
+        input[type="radio"] {
+            line-height: normal;
+            padding: 0;
+        }
+
+        *,
+        ::after,
+        ::before {
+            box-sizing: border-box;
+        }
+
+        #write h1,
+        #write h2,
+        #write h3,
+        #write h4,
+        #write h5,
+        #write h6,
+        #write p,
+        #write pre {
+            width: inherit;
+        }
+
+        #write h1,
+        #write h2,
+        #write h3,
+        #write h4,
+        #write h5,
+        #write h6,
+        #write p {
+            position: relative;
+        }
+
+        p {
+            line-height: inherit;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            break-after: avoid-page;
+            break-inside: avoid;
+            orphans: 2;
+        }
+
+        p {
+            orphans: 4;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+        }
+
+        h4 {
+            font-size: 1.4rem;
+        }
+
+        h5 {
+            font-size: 1.2rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        .md-math-block,
+        .md-rawblock,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .md-blockmeta {
+            color: rgb(204, 204, 204);
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        sup.md-footnote {
+            padding: 2px 4px;
+            background-color: rgba(238, 238, 238, 0.7);
+            color: rgb(85, 85, 85);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        sup.md-footnote a,
+        sup.md-footnote a:hover {
+            color: inherit;
+            text-transform: inherit;
+            text-decoration: inherit;
+        }
+
+        #write input[type="checkbox"] {
+            cursor: pointer;
+            width: inherit;
+            height: inherit;
+        }
+
+        figure {
+            overflow-x: auto;
+            margin: 1.2em 0;
+            max-width: calc(100% + 16px);
+            padding: 0;
+        }
+
+        figure>table {
+            margin: 0 !important;
+        }
+
+        tr {
+            break-inside: avoid;
+            break-after: auto;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            overflow: auto;
+            break-inside: auto;
+            text-align: left;
+        }
+
+        table.md-table td {
+            min-width: 32px;
+        }
+
+        .CodeMirror-gutters {
+            border-right: 0;
+            background-color: inherit;
+        }
+
+        .CodeMirror-linenumber {
+            user-select: none;
+        }
+
+        .CodeMirror {
+            text-align: left;
+        }
+
+        .CodeMirror-placeholder {
+            opacity: 0.3;
+        }
+
+        .CodeMirror pre {
+            padding: 0 4px;
+        }
+
+        .CodeMirror-lines {
+            padding: 0;
+        }
+
+        div.hr:focus {
+            cursor: none;
+        }
+
+        #write pre {
+            white-space: pre-wrap;
+        }
+
+        #write.fences-no-line-wrapping pre {
+            white-space: pre;
+        }
+
+        #write pre.ty-contain-cm {
+            white-space: normal;
+        }
+
+        .CodeMirror-gutters {
+            margin-right: 4px;
+        }
+
+        .md-fences {
+            font-size: 0.9rem;
+            display: block;
+            break-inside: avoid;
+            text-align: left;
+            overflow: visible;
+            white-space: pre;
+            background: inherit;
+            position: relative !important;
+        }
+
+        .md-diagram-panel {
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+            padding-top: 0;
+            padding-bottom: 8px;
+            overflow-x: auto;
+        }
+
+        #write .md-fences.mock-cm {
+            white-space: pre-wrap;
+        }
+
+        .md-fences.md-fences-with-lineno {
+            padding-left: 0;
+        }
+
+        #write.fences-no-line-wrapping .md-fences.mock-cm {
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .md-fences.mock-cm.md-fences-with-lineno {
+            padding-left: 8px;
+        }
+
+        .CodeMirror-line,
+        twitterwidget {
+            break-inside: avoid;
+        }
+
+        .footnotes {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        .footnotes+.footnotes {
+            margin-top: 0;
+        }
+
+        .md-reset {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            vertical-align: top;
+            background: 0 0;
+            text-decoration: none;
+            text-shadow: none;
+            float: none;
+            position: static;
+            width: auto;
+            height: auto;
+            white-space: nowrap;
+            cursor: inherit;
+            -webkit-tap-highlight-color: transparent;
+            line-height: normal;
+            font-weight: 400;
+            text-align: left;
+            box-sizing: content-box;
+            direction: ltr;
+        }
+
+        li div {
+            padding-top: 0;
+        }
+
+        blockquote {
+            margin: 1rem 0;
+        }
+
+        li .mathjax-block,
+        li p {
+            margin: 0.5rem 0;
+        }
+
+        li {
+            margin: 0;
+            position: relative;
+        }
+
+        blockquote> :last-child {
+            margin-bottom: 0;
+        }
+
+        blockquote> :first-child,
+        li> :first-child {
+            margin-top: 0;
+        }
+
+        .footnotes-area {
+            color: rgb(136, 136, 136);
+            margin-top: 0.714rem;
+            padding-bottom: 0.143rem;
+            white-space: normal;
+        }
+
+        #write .footnote-line {
+            white-space: pre-wrap;
+        }
+
+        @media print {
+
+            body,
+            html {
+                border: 1px solid transparent;
+                height: 99%;
+                break-after: avoid;
+                break-before: avoid;
+            }
+
+            #write {
+                margin-top: 0;
+                padding-top: 0;
+                border-color: transparent !important;
+            }
+
+            .typora-export * {
+                -webkit-print-color-adjust: exact;
+            }
+
+            html.blink-to-pdf {
+                font-size: 13px;
+            }
+
+            .typora-export #write {
+                padding-left: 32px;
+                padding-right: 32px;
+                padding-bottom: 0;
+                break-after: avoid;
+            }
+
+            .typora-export #write::after {
+                height: 0;
+            }
+        }
+
+        .footnote-line {
+            margin-top: 0.714em;
+            font-size: 0.7em;
+        }
+
+        a img,
+        img a {
+            cursor: pointer;
+        }
+
+        pre.md-meta-block {
+            font-size: 0.8rem;
+            min-height: 0.8rem;
+            white-space: pre-wrap;
+            background: rgb(204, 204, 204);
+            display: block;
+            overflow-x: hidden;
+        }
+
+        p>.md-image:only-child:not(.md-img-error) img,
+        p>img:only-child {
+            display: block;
+            margin: auto;
+        }
+
+        p>.md-image:only-child {
+            display: inline-block;
+            width: 100%;
+        }
+
+        #write .MathJax_Display {
+            margin: 0.8em 0 0;
+        }
+
+        .md-math-block {
+            width: 100%;
+        }
+
+        .md-math-block:not(:empty)::after {
+            display: none;
+        }
+
+        [contenteditable="true"]:active,
+        [contenteditable="true"]:focus,
+        [contenteditable="false"]:active,
+        [contenteditable="false"]:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+
+        .md-task-list-item {
+            position: relative;
+            list-style-type: none;
+        }
+
+        .task-list-item.md-task-list-item {
+            padding-left: 0;
+        }
+
+        .md-task-list-item>input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-left: -1.2em;
+            margin-top: calc(1em - 10px);
+            border: none;
+        }
+
+        .math {
+            font-size: 1rem;
+        }
+
+        .md-toc {
+            min-height: 3.58rem;
+            position: relative;
+            font-size: 0.9rem;
+            border-radius: 10px;
+        }
+
+        .md-toc-content {
+            position: relative;
+            margin-left: 0px;
+        }
+
+        .md-toc-content::after,
+        .md-toc::after {
+            display: none;
+        }
+
+        .md-toc-item {
+            display: block;
+            color: rgb(65, 131, 196);
+        }
+
+        .md-toc-item a {
+            text-decoration: none;
+        }
+
+        .md-toc-inner:hover {
+            text-decoration: underline;
+        }
+
+        .md-toc-inner {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .md-toc-h1 .md-toc-inner {
+            margin-left: 0;
+            font-weight: 700;
+        }
+
+        .md-toc-h2 .md-toc-inner {
+            margin-left: 2em;
+        }
+
+        .md-toc-h3 .md-toc-inner {
+            margin-left: 4em;
+        }
+
+        .md-toc-h4 .md-toc-inner {
+            margin-left: 6em;
+        }
+
+        .md-toc-h5 .md-toc-inner {
+            margin-left: 8em;
+        }
+
+        .md-toc-h6 .md-toc-inner {
+            margin-left: 10em;
+        }
+
+        @media screen and (max-width: 48em) {
+            .md-toc-h3 .md-toc-inner {
+                margin-left: 3.5em;
+            }
+
+            .md-toc-h4 .md-toc-inner {
+                margin-left: 5em;
+            }
+
+            .md-toc-h5 .md-toc-inner {
+                margin-left: 6.5em;
+            }
+
+            .md-toc-h6 .md-toc-inner {
+                margin-left: 8em;
+            }
+        }
+
+        a.md-toc-inner {
+            font-size: inherit;
+            font-style: inherit;
+            font-weight: inherit;
+            line-height: inherit;
+        }
+
+        .footnote-line a:not(.reversefootnote) {
+            color: inherit;
+        }
+
+        .md-attr {
+            display: none;
+        }
+
+        .md-fn-count::after {
+            content: ".";
+        }
+
+        code,
+        pre,
+        samp,
+        tt {
+            font-family: var(--monospace);
+        }
+
+        kbd {
+            margin: 0 0.1em;
+            padding: 0.1em 0.6em;
+            font-size: 0.8em;
+            color: rgb(36, 39, 41);
+            background: rgb(255, 255, 255);
+            border: 1px solid rgb(173, 179, 185);
+            border-radius: 3px;
+            box-shadow: rgba(12, 13, 14, 0.2) 0 1px 0, rgb(255, 255, 255) 0 0 0 2px inset;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+
+        .md-comment {
+            color: rgb(162, 127, 3);
+            opacity: 0.8;
+            font-family: var(--monospace);
+        }
+
+        code {
+            text-align: left;
+            vertical-align: initial;
+        }
+
+        a.md-print-anchor {
+            white-space: pre !important;
+            border-width: initial !important;
+            border-style: none !important;
+            border-color: initial !important;
+            display: inline-block !important;
+            position: absolute !important;
+            width: 1px !important;
+            right: 0 !important;
+            outline: 0 !important;
+            background: 0 0 !important;
+            text-decoration: initial !important;
+            text-shadow: initial !important;
+        }
+
+        .md-inline-math .MathJax_SVG .noError {
+            display: none !important;
+        }
+
+        .html-for-mac .inline-math-svg .MathJax_SVG {
+            vertical-align: 0.2px;
+        }
+
+        .md-math-block .MathJax_SVG_Display {
+            text-align: center;
+            margin: 0;
+            position: relative;
+            text-indent: 0;
+            max-width: none;
+            max-height: none;
+            min-height: 0;
+            min-width: 100%;
+            width: auto;
+            overflow-y: hidden;
+            display: block !important;
+        }
+
+        .MathJax_SVG_Display,
+        .md-inline-math .MathJax_SVG_Display {
+            width: auto;
+            margin: inherit;
+            display: inline-block !important;
+        }
+
+        .MathJax_SVG .MJX-monospace {
+            font-family: var(--monospace);
+        }
+
+        .MathJax_SVG .MJX-sans-serif {
+            font-family: sans-serif;
+        }
+
+        .MathJax_SVG {
+            display: inline;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            zoom: 90%;
+            text-indent: 0;
+            text-align: left;
+            text-transform: none;
+            letter-spacing: normal;
+            word-spacing: normal;
+            overflow-wrap: normal;
+            white-space: nowrap;
+            float: none;
+            direction: ltr;
+            max-width: none;
+            max-height: none;
+            min-width: 0;
+            min-height: 0;
+            border: 0;
+            padding: 0;
+            margin: 0;
+        }
+
+        .MathJax_SVG * {
+            transition: none 0s ease 0s;
+        }
+
+        .MathJax_SVG_Display svg {
+            vertical-align: middle !important;
+            margin-bottom: 0 !important;
+            margin-top: 0 !important;
+        }
+
+        .os-windows.monocolor-emoji .md-emoji {
+            font-family: "Segoe UI Symbol", sans-serif;
+        }
+
+        .md-diagram-panel>svg {
+            max-width: 100%;
+        }
+
+        [lang="flow"] svg,
+        [lang="mermaid"] svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        [lang="mermaid"] .node text {
+            font-size: 1rem;
+        }
+
+        table tr th {
+            border-bottom: 0;
+        }
+
+        video {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        iframe {
+            max-width: 100%;
+            width: 100%;
+            border: none;
+        }
+
+        .highlight td,
+        .highlight tr {
+            border: 0;
+        }
+
+        svg[id^="mermaidChart"] {
+            line-height: 1em;
+        }
+
+        mark {
+            background: rgb(255, 255, 0);
+            color: rgb(0, 0, 0);
+        }
+
+        .md-html-inline .md-plain,
+        .md-html-inline strong,
+        mark .md-inline-math,
+        mark strong {
+            color: inherit;
+        }
+
+        mark .md-meta {
+            color: rgb(0, 0, 0);
+            opacity: 0.3 !important;
+        }
+
+
+        .CodeMirror {
+            height: auto;
+        }
+
+        .CodeMirror.cm-s-inner {
+            background: inherit;
+        }
+
+        .CodeMirror-scroll {
+            overflow: auto hidden;
+            z-index: 3;
+        }
+
+        .CodeMirror-gutter-filler,
+        .CodeMirror-scrollbar-filler {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .CodeMirror-gutters {
+            border-right: 1px solid rgb(221, 221, 221);
+            background: inherit;
+            white-space: nowrap;
+        }
+
+        .CodeMirror-linenumber {
+            padding: 0 3px 0 5px;
+            text-align: right;
+            color: rgb(153, 153, 153);
+        }
+
+        .cm-s-inner .cm-keyword {
+            color: rgb(119, 0, 136);
+        }
+
+        .cm-s-inner .cm-atom,
+        .cm-s-inner.cm-atom {
+            color: rgb(34, 17, 153);
+        }
+
+        .cm-s-inner .cm-number {
+            color: rgb(17, 102, 68);
+        }
+
+        .cm-s-inner .cm-def {
+            color: rgb(0, 0, 255);
+        }
+
+        .cm-s-inner .cm-variable {
+            color: rgb(0, 0, 0);
+        }
+
+        .cm-s-inner .cm-variable-2 {
+            color: rgb(0, 85, 170);
+        }
+
+        .cm-s-inner .cm-variable-3 {
+            color: rgb(0, 136, 85);
+        }
+
+        .cm-s-inner .cm-string {
+            color: rgb(170, 17, 17);
+        }
+
+        .cm-s-inner .cm-property {
+            color: rgb(0, 0, 0);
+        }
+
+        .cm-s-inner .cm-operator {
+            color: rgb(152, 26, 26);
+        }
+
+        .cm-s-inner .cm-comment,
+        .cm-s-inner.cm-comment {
+            color: rgb(170, 85, 0);
+        }
+
+        .cm-s-inner .cm-string-2 {
+            color: rgb(255, 85, 0);
+        }
+
+        .cm-s-inner .cm-meta {
+            color: rgb(85, 85, 85);
+        }
+
+        .cm-s-inner .cm-qualifier {
+            color: rgb(85, 85, 85);
+        }
+
+        .cm-s-inner .cm-builtin {
+            color: rgb(51, 0, 170);
+        }
+
+        .cm-s-inner .cm-bracket {
+            color: rgb(153, 153, 119);
+        }
+
+        .cm-s-inner .cm-tag {
+            color: rgb(17, 119, 0);
+        }
+
+        .cm-s-inner .cm-attribute {
+            color: rgb(0, 0, 204);
+        }
+
+        .cm-s-inner .cm-header,
+        .cm-s-inner.cm-header {
+            color: rgb(0, 0, 255);
+        }
+
+        .cm-s-inner .cm-quote,
+        .cm-s-inner.cm-quote {
+            color: rgb(0, 153, 0);
+        }
+
+        .cm-s-inner .cm-hr,
+        .cm-s-inner.cm-hr {
+            color: rgb(153, 153, 153);
+        }
+
+        .cm-s-inner .cm-link,
+        .cm-s-inner.cm-link {
+            color: rgb(0, 0, 204);
+        }
+
+        .cm-negative {
+            color: rgb(221, 68, 68);
+        }
+
+        .cm-positive {
+            color: rgb(34, 153, 34);
+        }
+
+        .cm-header,
+        .cm-strong {
+            font-weight: 700;
+        }
+
+        .cm-del {
+            text-decoration: line-through;
+        }
+
+        .cm-em {
+            font-style: italic;
+        }
+
+        .cm-link {
+            text-decoration: underline;
+        }
+
+        .cm-error {
+            color: red;
+        }
+
+        .cm-invalidchar {
+            color: red;
+        }
+
+        .cm-constant {
+            color: rgb(38, 139, 210);
+        }
+
+        .cm-defined {
+            color: rgb(181, 137, 0);
+        }
+
+        div.CodeMirror span.CodeMirror-matchingbracket {
+            color: rgb(0, 255, 0);
+        }
+
+        div.CodeMirror span.CodeMirror-nonmatchingbracket {
+            color: rgb(255, 34, 34);
+        }
+
+        .cm-s-inner .CodeMirror-activeline-background {
+            background: inherit;
+        }
+
+        .CodeMirror {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .CodeMirror-scroll {
+            height: 100%;
+            outline: 0;
+            position: relative;
+            box-sizing: content-box;
+            background: inherit;
+        }
+
+        .CodeMirror-sizer {
+            position: relative;
+        }
+
+        .CodeMirror-gutter-filler,
+        .CodeMirror-hscrollbar,
+        .CodeMirror-scrollbar-filler,
+        .CodeMirror-vscrollbar {
+            position: absolute;
+            z-index: 6;
+            display: none;
+        }
+
+        .CodeMirror-vscrollbar {
+            right: 0;
+            top: 0;
+            overflow: hidden;
+        }
+
+        .CodeMirror-hscrollbar {
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .CodeMirror-scrollbar-filler {
+            right: 0;
+            bottom: 0;
+        }
+
+        .CodeMirror-gutter-filler {
+            left: 0;
+            bottom: 0;
+        }
+
+        .CodeMirror-gutters {
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding-bottom: 30px;
+            z-index: 3;
+        }
+
+        .CodeMirror-gutter {
+            white-space: normal;
+            height: 100%;
+            box-sizing: content-box;
+            padding-bottom: 30px;
+            margin-bottom: -32px;
+            display: inline-block;
+        }
+
+        .CodeMirror-gutter-wrapper {
+            position: absolute;
+            z-index: 4;
+            background: 0 0 !important;
+            border: none !important;
+        }
+
+        .CodeMirror-gutter-background {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 4;
+        }
+
+        .CodeMirror-gutter-elt {
+            position: absolute;
+            cursor: default;
+            z-index: 4;
+        }
+
+        .CodeMirror-lines {
+            cursor: text;
+        }
+
+        .CodeMirror pre {
+            border-radius: 0;
+            border-width: 0;
+            background: 0 0;
+            font-family: inherit;
+            font-size: inherit;
+            margin: 0;
+            white-space: pre;
+            overflow-wrap: normal;
+            color: inherit;
+            z-index: 2;
+            position: relative;
+            overflow: visible;
+        }
+
+        .CodeMirror-wrap pre {
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+            word-break: normal;
+        }
+
+        .CodeMirror-code pre {
+            border-right: 30px solid transparent;
+            width: fit-content;
+        }
+
+        .CodeMirror-wrap .CodeMirror-code pre {
+            border-right: none;
+            width: auto;
+        }
+
+        .CodeMirror-linebackground {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+        }
+
+        .CodeMirror-linewidget {
+            position: relative;
+            z-index: 2;
+            overflow: auto;
+        }
+
+        .CodeMirror-wrap .CodeMirror-scroll {
+            overflow-x: hidden;
+        }
+
+        .CodeMirror-measure {
+            position: absolute;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+        }
+
+        .CodeMirror-measure pre {
+            position: static;
+        }
+
+        .CodeMirror div.CodeMirror-cursor {
+            position: absolute;
+            visibility: hidden;
+            border-right: none;
+            width: 0;
+        }
+
+        .CodeMirror div.CodeMirror-cursor {
+            visibility: hidden;
+        }
+
+        .CodeMirror-focused div.CodeMirror-cursor {
+            visibility: inherit;
+        }
+
+        .cm-searching {
+            background: rgba(255, 255, 0, 0.4);
+        }
+
+        @media print {
+            .CodeMirror div.CodeMirror-cursor {
+                visibility: hidden;
+            }
+        }
+
+
+        :root {
+            --side-bar-bg-color: #fafafa;
+            --control-text-color: #777;
+        }
+
+
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            color: rgb(51, 51, 51);
+            line-height: 1.6;
+        }
+
+        #write {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 30px;
+            padding-bottom: 100px;
+        }
+
+        #write>ul:first-child,
+        #write>ol:first-child {
+            margin-top: 30px;
+        }
+
+        a {
+            color: #4183C4;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            position: relative;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            line-height: 1.4;
+            cursor: text;
+        }
+
+        h1:hover a.anchor,
+        h2:hover a.anchor,
+        h3:hover a.anchor,
+        h4:hover a.anchor,
+        h5:hover a.anchor,
+        h6:hover a.anchor {
+            text-decoration: none;
+        }
+
+        h1 tt,
+        h1 code {
+            font-size: inherit;
+        }
+
+        h2 tt,
+        h2 code {
+            font-size: inherit;
+        }
+
+        h3 tt,
+        h3 code {
+            font-size: inherit;
+        }
+
+        h4 tt,
+        h4 code {
+            font-size: inherit;
+        }
+
+        h5 tt,
+        h5 code {
+            font-size: inherit;
+        }
+
+        h6 tt,
+        h6 code {
+            font-size: inherit;
+        }
+
+        h1 {
+            padding-bottom: .3em;
+            font-size: 2.25em;
+            line-height: 1.2;
+            border-bottom: 1px solid #eee;
+        }
+
+        h2 {
+            padding-bottom: .3em;
+            font-size: 1.75em;
+            line-height: 1.225;
+            border-bottom: 1px solid #eee;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            line-height: 1.43;
+        }
+
+        h4 {
+            font-size: 1.25em;
+        }
+
+        h5 {
+            font-size: 1em;
+        }
+
+        h6 {
+            font-size: 1em;
+            color: #777;
+        }
+
+        p,
+        blockquote,
+        ul,
+        ol,
+        dl,
+        table {
+            margin: 0.8em 0;
+        }
+
+        li>ol,
+        li>ul {
+            margin: 0 0;
+        }
+
+        hr {
+            height: 2px;
+            padding: 0;
+            margin: 16px 0;
+            background-color: #e7e7e7;
+            border: 0 none;
+            overflow: hidden;
+            box-sizing: content-box;
+        }
+
+        li p.first {
+            display: inline-block;
+        }
+
+        ul,
+        ol {
+            padding-left: 30px;
+        }
+
+        ul:first-child,
+        ol:first-child {
+            margin-top: 0;
+        }
+
+        ul:last-child,
+        ol:last-child {
+            margin-bottom: 0;
+        }
+
+        blockquote {
+            border-left: 4px solid #dfe2e5;
+            padding: 0 15px;
+            color: #777777;
+        }
+
+        blockquote blockquote {
+            padding-right: 0;
+        }
+
+        table {
+            padding: 0;
+            word-break: initial;
+        }
+
+        table tr {
+            border-top: 1px solid #dfe2e5;
+            margin: 0;
+            padding: 0;
+        }
+
+        table tr:nth-child(2n),
+        thead {
+            background-color: #f8f8f8;
+        }
+
+        table tr th {
+            font-weight: bold;
+            border: 1px solid #dfe2e5;
+            border-bottom: 0;
+            margin: 0;
+            padding: 6px 13px;
+        }
+
+        table tr td {
+            border: 1px solid #dfe2e5;
+            margin: 0;
+            padding: 6px 13px;
+        }
+
+        table tr th:first-child,
+        table tr td:first-child {
+            margin-top: 0;
+        }
+
+        table tr th:last-child,
+        table tr td:last-child {
+            margin-bottom: 0;
+        }
+
+        .CodeMirror-lines {
+            padding-left: 4px;
+        }
+
+        .code-tooltip {
+            box-shadow: 0 1px 1px 0 rgba(0, 28, 36, .3);
+            border-top: 1px solid #eef2f2;
+        }
+
+        .md-fences,
+        code,
+        tt {
+            border: 1px solid #e7eaed;
+            background-color: #f8f8f8;
+            border-radius: 3px;
+            padding: 0;
+            padding: 2px 4px 0 4px;
+            font-size: 0.9em;
+        }
+
+        code {
+            background-color: #f3f4f4;
+            padding: 0 2px 0 2px;
+        }
+
+        .md-fences {
+            margin-bottom: 15px;
+            margin-top: 15px;
+            padding-top: 8px;
+            padding-bottom: 6px;
+        }
+
+
+        .md-task-list-item>input {
+            margin-left: -1.3em;
+        }
+
+        @media print {
+            html {
+                font-size: 13px;
+            }
+
+            table,
+            pre {
+                page-break-inside: avoid;
+            }
+
+            pre {
+                word-wrap: break-word;
+            }
+        }
+
+        .md-fences {
+            background-color: #f8f8f8;
+        }
+
+        #write pre.md-meta-block {
+            padding: 1rem;
+            font-size: 85%;
+            line-height: 1.45;
+            background-color: #f7f7f7;
+            border: 0;
+            border-radius: 3px;
+            color: #777777;
+            margin-top: 0 !important;
+        }
+
+        .mathjax-block>.code-tooltip {
+            bottom: .375rem;
+        }
+
+        .md-mathjax-midline {
+            background: #fafafa;
+        }
+
+        #write>h3.md-focus:before {
+            left: -1.5625rem;
+            top: .375rem;
+        }
+
+        #write>h4.md-focus:before {
+            left: -1.5625rem;
+            top: .285714286rem;
+        }
+
+        #write>h5.md-focus:before {
+            left: -1.5625rem;
+            top: .285714286rem;
+        }
+
+        #write>h6.md-focus:before {
+            left: -1.5625rem;
+            top: .285714286rem;
+        }
+
+        .md-image>.md-meta {
+            /*border: 1px solid #ddd;*/
+            border-radius: 3px;
+            padding: 2px 0 0 4px;
+            font-size: 0.9em;
+            color: inherit;
+        }
+
+        .md-tag {
+            color: #a7a7a7;
+            opacity: 1;
+        }
+
+        .md-toc {
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .sidebar-tabs {
+            border-bottom: none;
+        }
+
+        #typora-quick-open {
+            border: 1px solid #ddd;
+            background-color: #f8f8f8;
+        }
+
+        #typora-quick-open-item {
+            background-color: #FAFAFA;
+            border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+            border-style: solid;
+            border-width: 1px;
+        }
+
+        /** focus mode */
+        .on-focus-mode blockquote {
+            border-left-color: rgba(85, 85, 85, 0.12);
+        }
+
+        header,
+        .context-menu,
+        .megamenu-content,
+        footer {
+            font-family: "Segoe UI", "Arial", sans-serif;
+        }
+
+        .file-node-content:hover .file-node-icon,
+        .file-node-content:hover .file-node-open-state {
+            visibility: visible;
+        }
+
+        .mac-seamless-mode #typora-sidebar {
+            background-color: #fafafa;
+            background-color: var(--side-bar-bg-color);
+        }
+
+        .md-lang {
+            color: #b4654d;
+        }
+
+        .html-for-mac .context-menu {
+            --item-hover-bg-color: #E6F0FE;
+        }
+
+        #md-notification .btn {
+            border: 0;
+        }
+
+        .dropdown-menu .divider {
+            border-color: #e5e5e5;
+        }
+
+        .ty-preferences .window-content {
+            background-color: #fafafa;
+        }
+
+        .ty-preferences .nav-group-item.active {
+            color: white;
+            background: #999;
+        }
+    </style>
+</head>
+
+<body class='typora-export os-windows'>
+<div id='write' class='is-node'>
+    <h2><a name="一基本命令" class="md-header-anchor"></a><span>一：基本命令：</span></h2>
+    <p>&nbsp;</p>
+    <h4><a name="查看当前服务下的所有数据库" class="md-header-anchor"></a><span>查看当前服务下的所有数据库</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0; width: 0;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SHOW</span> <span class="cm-keyword">DATABASES</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0; width: 1px; border-bottom: 0 solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="创建数据库" class="md-header-anchor"></a><span>创建数据库</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0; width: 0;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">DATABASE</span> mydb;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0; width: 1px; border-bottom: 0 solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="进入数据库" class="md-header-anchor"></a><span>进入数据库</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0; width: 0;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">USE</span> mydb;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0; width: 1px; border-bottom: 0 solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="查看当前库中的表" class="md-header-anchor"></a><span>查看当前库中的表</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0; width: 0;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SHOW</span> <span class="cm-keyword">TABLES</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0; width: 1px; border-bottom: 0 solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="创建数据表" class="md-header-anchor"></a><span>创建数据表</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0; width: 0;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> classinfo(</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>classId <span class="cm-builtin">int</span> <span class="cm-keyword">AUTO_INCREMENT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  className <span class="cm-builtin">varchar</span>(<span class="cm-number">4</span>),</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  openDate <span class="cm-builtin">date</span></span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;">);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0; width: 1px; border-bottom: 0 solid transparent; top: 113px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 113px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p>&nbsp;</p>
+    <h4><a name="查看表结构" class="md-header-anchor"></a><span>查看表结构</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0; top: 0; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">DESC</span> classinfo;// description描述</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <hr />
+    <p><strong><span>数据操作：</span></strong></p>
+    <h4><a name="新增一行记录" class="md-header-anchor"></a><span>新增一行记录</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="Mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> classinfo(classId, className, Opendate)</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">VALUE</span> (<span class="cm-number">1</span>,<span class="cm-string">'KB06'</span>,<span class="cm-string">'2020-1-18'</span>);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 45px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="新增多行记录" class="md-header-anchor"></a><span>新增多行记录</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> classinfo(classId, className, Opendate) </span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">VALUE</span> (<span class="cm-number">6</span>,<span class="cm-string">'KB09'</span>,<span class="cm-string">'2020-4-18'</span>),</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>  (<span class="cm-number">9</span>,<span class="cm-string">'KB07'</span>,<span class="cm-string">'2020-2-18'</span>),</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp; &nbsp;  (<span class="cm-number">10</span>,<span class="cm-string">'KB08'</span>,<span class="cm-string">'2020-3-18'</span>);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 91px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 91px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="新增多行记录----从一张表中的数据搬到另一张表" class="md-header-anchor"></a><span>新增多行记录----从一张表中的数据搬到另一张表</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> classinfo2(classId, className, Opendate)</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;">classId, className, Opendate</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span> classinfo;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 91px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 91px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="新增多行记录----从一张表中的结构和数据搬到新表" class="md-header-anchor"></a><span>新增多行记录----从一张表中的结构和数据搬到新表</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> classinfo3(</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">SELECT</span> classId, className, Opendate <span class="cm-keyword">FROM</span> classinfo</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;">);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 68px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 68px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="删除数据记录" class="md-header-anchor"></a><span>删除数据记录</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">DELETE</span> <span class="cm-keyword">FROM</span> classinfo3 <span class="cm-keyword">WHERE</span> classId=<span class="cm-number">3</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="修改数据记录" class="md-header-anchor"></a><span>修改数据记录</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">UPDATE</span> classinfo3 <span class="cm-keyword">SET</span> className=<span class="cm-string">'TB08'</span>,openDate=<span class="cm-string">'2020-4-10'</span></span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">WHERE</span> classId=<span class="cm-number">2</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 45px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="简单查询语句" class="md-header-anchor"></a><span>简单查询语句</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span> * <span class="cm-keyword">FROM</span> classinfo;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <hr />
+    <p><strong><span>对象操作：</span></strong></p>
+    <h4><a name="删除数据库" class="md-header-anchor"></a><span>删除数据库</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="MYSQL"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">DROP</span> <span class="cm-keyword">DATABASE</span> mydb;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="删除数据表" class="md-header-anchor"></a><span>删除数据表</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">DROP</span> <span class="cm-keyword">TABLE</span> classinfo3;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <h4><a name="删除数据----一次性删除表中所有数据无法恢复--不可以带条件"
+           class="md-header-anchor"></a><span>删除数据----一次性删除表中所有数据，无法恢复--不可以带条件</span></h4>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">TRUNCATE</span> <span class="cm-keyword">TABLE</span> classinfo2;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <hr />
+    <p><strong><span>创建带约束的表</span></strong></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> student(// 从表</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>stuId <span class="cm-builtin">INT</span> <span class="cm-builtin">UNSIGNED</span> <span class="cm-keyword">AUTO_INCREMENT</span> <span class="cm-keyword">PRIMARY</span> <span class="cm-keyword">KEY</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  stuName <span class="cm-builtin">VARCHAR</span>(<span class="cm-number">4</span>) <span class="cm-keyword">NOT</span> <span class="cm-atom">NULL</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  gender <span class="cm-builtin">CHAR</span>(<span class="cm-number">1</span>) <span class="cm-keyword">NOT</span> <span class="cm-atom">NULL</span> <span class="cm-keyword">DEFAULT</span> <span class="cm-string">'男'</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  email <span class="cm-builtin">VARCHAR</span>(<span class="cm-number">50</span>) <span class="cm-keyword">NOT</span> <span class="cm-atom">NULL</span> <span class="cm-keyword">UNIQUE</span> <span class="cm-keyword">KEY</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  // 这张表是外键，在classinfo是主键，这里外键引用主键</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  //classId <span class="cm-builtin">INT</span> <span class="cm-keyword">NOT</span> <span class="cm-atom">NULL</span> <span class="cm-keyword">REFERENCES</span> classinfo(classId)</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  // fk_主表名_从表名_外键字段名</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  classId <span class="cm-builtin">INT</span> <span class="cm-keyword">NOT</span> <span class="cm-atom">NULL</span>,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">CONSTRAINT</span> fk_class_student_classId <span class="cm-keyword">FOREIGN</span> <span class="cm-keyword">KEY</span>(classId) <span class="cm-keyword">REFERENCES</span> <span class="cm-tab" role="presentation" cm-text="	">    </span>classinfo(classId)</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  // 被引用的主键的表是主表</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;">)<span class="cm-string-2">CHARSET</span> UTF8;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 295px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 295px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p><span>插入时：1.自增列不管它，2.有默认值的字段也可以不管它，除非要改，3.允许为空也可以不管</span></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> student(stuName, email, classId) </span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">VALUE</span>(<span class="cm-string">'李斯'</span>,<span class="cm-string">'123@ww.com'</span>,<span class="cm-string">'1'</span>);</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" class="cm-tab-wrap-hack" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span></span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> student(stuName,gender,email, classId) </span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">VALUE</span>(<span class="cm-string">'李斯'</span>,<span class="cm-string">'女'</span>,<span class="cm-string">'123@sww.com'</span>,<span class="cm-string">'7'</span>);</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> student(gender,email, classId) </span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">VALUE</span>(<span class="cm-string">'女'</span>,<span class="cm-string">'123@ww.com'</span>,<span class="cm-string">'6'</span>);</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 181px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 181px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p><span>创建基本语法：</span></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">CREATE</span> <span class="cm-keyword">TABLE</span> <span class="cm-keyword">TABLE_NAME</span>(</span></pre>
+    </div>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>FIELD_NAME DATA_TYPE(n) SPECIAL_CONSTRAINT,</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  ...</span></pre>
+    <pre class=" CodeMirror-line "
+         role="presentation"><span role="presentation" style="padding-right: 0.1px;">);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 91px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 91px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p><span>新增数据基本语法：</span></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">INSERT</span> <span class="cm-keyword">INTO</span> <span class="cm-keyword">TABLE_NAME</span>(FIELD_NAME,...) <span class="cm-keyword">VALUE</span> (<span class="cm-keyword">VALUE</span>,...);</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p><span>删除数据基本语法：</span></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">DELETE</span> <span class="cm-keyword">FROM</span> <span class="cm-keyword">TABLE_NAME</span> <span class="cm-keyword">WHERE</span> <span class="cm-keyword">CONDITION</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p><span>修改数据基本语法：</span></p>
+    <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+         lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">UPDATE</span> <span class="cm-keyword">TABLE_NAME</span> <span class="cm-keyword">SET</span> FIELD_NAME1=VALUE1, FIELD_NAME2=VALUE2,... <span class="cm-keyword">WHERE</span> <span class="cm-keyword">CONDITION</span>;</span></pre>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div>
+    <div class="CodeMirror-gutters" style="display: none; height: 45px;"></div>
+    </div>
+    </div>
+    </pre>
+    <p>&nbsp;</p>
+    <h2><a name="二数据类型" class="md-header-anchor"></a><span>二：数据类型：</span></h2>
+    <figure>
+        <table>
+            <thead>
+            <tr>
+                <th style='text-align:center;'>&nbsp;</th>
+                <th style='text-align:center;'><span>java</span></th>
+                <th style='text-align:center;'><span>js</span></th>
+                <th style='text-align:center;'><span>mysql</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style='text-align:center;'><span>字符</span></td>
+                <td style='text-align:center;'><span>char</span></td>
+                <td style='text-align:center;'><span>string</span></td>
+                <td style='text-align:center;'><span>char（n）-n为允许的最大长度</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>字符串</span></td>
+                <td style='text-align:center;'><span>String</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>varchar(n)-可变长度</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>字符串</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>text-长文本</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>数值</span></td>
+                <td style='text-align:center;'><span>byte</span></td>
+                <td style='text-align:center;'><span>number</span></td>
+                <td style='text-align:center;'><span>tinyint</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>short</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>smallint</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>int</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>int</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>long</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>bigint</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>小数</span></td>
+                <td style='text-align:center;'><span>float</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>decimal(m,n)</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>double</span></td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>-m:最大长度(整体)-n:精度(小数)</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>money</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>numeric(m,n)</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>布尔</span></td>
+                <td style='text-align:center;'><span>boolean</span></td>
+                <td style='text-align:center;'><span>boolean</span></td>
+                <td style='text-align:center;'><span>bit 0/1(取到java变成T/F)</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'><span>日期</span></td>
+                <td style='text-align:center;'><span>Date</span></td>
+                <td style='text-align:center;'><span>Date</span></td>
+                <td style='text-align:center;'><span>date年月日</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>datetime年月日时分秒</span></td>
+            </tr>
+            <tr>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'>&nbsp;</td>
+                <td style='text-align:center;'><span>timestamp自动提供默认值</span></td>
+            </tr>
+            </tbody>
+        </table>
+    </figure>
+    <h2><a name="三specialconstraint" class="md-header-anchor"></a><span>三：SPECIAL_CONSTRAINT</span></h2>
+    <h4><a name="1符号默认有正负-------unsigned无符号只有正数）"
+           class="md-header-anchor"></a><span>1.符号：默认有正负-------UNSIGNED:无符号（只有正数）</span></h4>
+    <h4><a name="2整数自增列autoincrement-默认1n" class="md-header-anchor"></a><span>2.整数：自增列，AUTO_INCREMENT ，默认1~n</span></h4>
+    <h4><a name="3非空not-null" class="md-header-anchor"></a><span>3.非空：NOT NULL</span></h4>
+    <h4><a name="4默认值default-value" class="md-header-anchor"></a><span>4.默认值：DEFAULT VALUE</span></h4>
+    <h4><a name="5唯一键unique-key" class="md-header-anchor"></a><span>5.唯一键：UNIQUE KEY</span></h4>
+    <h4><a name="6主键primary-key" class="md-header-anchor"></a><span>6.主键：PRIMARY KEY</span></h4>
+    <p><strong><span>PS：关系型数据库，一般每张表都需要设置一个无意义的自增列作为主键，主键为不可以重复，不可以为null的字段。</span></strong></p>
+    <h4><a name="7外键foreign-key" class="md-header-anchor"></a><span>7.外键：FOREIGN KEY</span></h4>
+    <hr />
+    <h2><a name="四查询" class="md-header-anchor"></a><span>四：查询</span></h2>
+    <h4><a name="删除修改查询condition" class="md-header-anchor"></a><span>删除/修改/查询：CONDITION</span></h4>
+    <ol start=''>
+        <li>
+            <p><span>一般来说，删除和修改必须带条件，且条件是主键或唯一键</span></p>
+        </li>
+        <li>
+            <p><span>查询条件非常丰富：</span></p>
+            <ul>
+                <li>
+                    <p><span>SELECT .... WHERE field_name</span></p>
+                    <figure>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th><span>java</span></th>
+                                <th><span>mysql</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><span>与</span></td>
+                                <td><span>&amp;&amp;</span></td>
+                                <td><span>and</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>或</span></td>
+                                <td><span>|</span><span>|</span></td>
+                                <td><span>or</span></td>
+                            </tr>
+                            <tr>
+                                <td><span>非</span></td>
+                                <td><span>！</span></td>
+                                <td><span>not</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </figure>
+                </li>
+                <li>
+                    <p><span>筛选：SELECT ... WHERE field_name IS [NOT] NULL</span></p>
+                </li>
+                <li>
+                    <p><span>区间：SELECT ... WHERE number_field BETWEEN ... AND...</span></p>
+                    <ul>
+                        <li><span>注意:between(&gt;=) and(&lt;=)</span></li>
+                    </ul>
+                </li>
+                <li>
+                    <p><span>列举：SELECT ... WHERE field_name IN（...）</span></p>
+                </li>
+                <li>
+                    <p><span>模糊查：SELECT ... WHERE field_name LIKE &#39;.....&#39;</span></p>
+                    <ul>
+                        <li>
+                            <p><span>通配符</span></p>
+                            <ol start=''>
+                                <li><span>% ：通配任意长度任意内容</span></li>
+                                <li><span>_： 统配一个长度任意内容</span></li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ol>
+    <h4><a name="查询" class="md-header-anchor"></a><span>查询</span></h4>
+    <ol start=''>
+        <li>
+            <p><span>基础查询标准语法</span></p>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="MYSQL"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0; margin-bottom: 0; border-right-width: 0; padding-right: 0; padding-bottom: 0;"><div style="position: relative; top: 0;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+            </div>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>field1,...<span class="cm-variable-2">.field</span><span class="cm-number">2</span> [<span class="cm-keyword">as</span>] alias(别名) 主要用于额外字段的别名 (字段名)</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">table</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">WHERE</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>... &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (字段里的具体数据)</span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 159px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 159px;"></div>
+            </div>
+            </div>
+            </pre>
+            <p><span>PS:字段列表为*为所有字段</span></p>
+            <hr />
+            <h4><a name="1简单条件查询" class="md-header-anchor"></a><span>1.简单条件查询</span></h4>
+            <ul>
+                <li><span>AND语句</span></li>
+            </ul>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="MYSQL"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+            </div>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>*</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>student</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">WHERE</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>gender=<span class="cm-string">'男'</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">AND</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>classId=<span class="cm-number">2</span>;</span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 181px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 181px;"></div>
+            </div>
+            </div>
+            </pre>
+            <ul>
+                <li><span>AND加关系运算符</span></li>
+            </ul>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+            </div>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>*</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>student</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">WHERE</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>gender=<span class="cm-string">'男'</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">AND</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>stuId&gt;=<span class="cm-number">2</span>;</span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 181px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 181px;"></div>
+            </div>
+            </div>
+            </pre>
+            <h4><a name="2排序查询" class="md-header-anchor"></a><span>2.排序查询</span></h4>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">ORDER</span> <span class="cm-keyword">BY</span> main_field <span class="cm-keyword">ASC</span> (升序) / <span class="cm-keyword">DESC</span> (降序), sub_field <span class="cm-keyword">ASC</span> (升序) / <span class="cm-keyword">DESC</span> (降序)</span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 45px;"></div>
+            </div>
+            </div>
+            </pre>
+            <ul>
+                <li>
+                    <p><strong><span>注意:</span></strong><span>1.主字段排序完后相等的,按子字段排序</span></p>
+                    <p><span> 2.不写升降序，默认升序</span></p>
+                </li>
+            </ul>
+            <h4><a name="3分页查询" class="md-header-anchor"></a><span>3.分页查询</span></h4>
+            <p><span>当前页码为pageNo,一页显示的数据量为pageSize</span></p>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">limit</span>  (pageNo-<span class="cm-number">1</span>)*pageSize, pageSize; </span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 23px;"></div>
+            </div>
+            </div>
+            </pre>
+            <h4><a name="4分组查询" class="md-header-anchor"></a><span>4.分组查询</span></h4>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+            </div>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">[main_field, sub_field....],聚合函数列表</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">stuscore</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">GROUP</span> <span class="cm-keyword">BY</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">main_field, sub_field...;</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 159px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 159px;"></div>
+            </div>
+            </div>
+            </pre>
+            <ul>
+                <li><span>注意：只有在group by之后出现，才可以出现在select之后的字段列表</span></li>
+                <li><span>先根据主字段分组，再根据子字段分组</span></li>
+            </ul>
+            <p><strong><span>给每个subId分组显示</span></strong></p>
+            <pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded"
+                 lang="mysql"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang="mysql"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">SELECT</span></span></pre>
+            </div>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">subId, <span class="cm-keyword">AVG</span>(score) avgSorce</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">FROM</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">stuscore</span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">GROUP</span> <span class="cm-keyword">BY</span></span></pre>
+            <pre class=" CodeMirror-line "
+                 role="presentation"><span role="presentation" style="padding-right: 0.1px;">subId;</span></pre>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 136px;">
+            </div>
+            <div class="CodeMirror-gutters" style="display: none; height: 136px;"></div>
+            </div>
+            </div>
+            </pre>
+            <p>&nbsp;</p>
+        </li>
+    </ol>
+    <hr />
+    <h2><a name="五函数" class="md-header-anchor"></a><span>五：函数</span></h2>
+    <h4><a name="字符串函数" class="md-header-anchor"></a><span>字符串函数</span></h4>
+    <ul>
+        <li><span>获取字符串的字节长度： </span><span> </span><span>length(&#39;...&#39;) 汉字三个字节</span></li>
+        <li><span>获取字符串长度： char_length(&#39;...&#39;)</span></li>
+        <li><span>拼接字符串： concat(val1,...,valn)</span></li>
+        <li><span>转小写/大写： lower(string)upper(string)</span></li>
+        <li><span>左右截取字符串: left(&#39;...&#39;, 从做开始长度)，right(&#39;...&#39;, 长度)</span></li>
+        <li><span>从指定位置截指定长度: mid/substring(str,pos,len) {字符串,开始位置，长度}从1开始</span></li>
+        <li><span>去除字符串两端空格; trim(string)</span></li>
+        <li><span>字符串替换: replace(str, src, dest){字符串，源，目标}</span></li>
+    </ul>
+    <h4><a name="日期函数" class="md-header-anchor"></a><span>日期函数</span></h4>
+    <ul>
+        <li><span>获取指定日期 select curdate();</span></li>
+        <li><span>获取当前时间 select now();</span></li>
+        <li><span>获取unix时间戳 unix_timestamp(),返回长整型</span></li>
+        <li><span>获取指定日期的年 year(date) -----date=&#39;2020-12-20&#39;</span></li>
+        <li><span>获取指定日期的月 month(date)</span></li>
+        <li><span>获取指定日期的日 dayofmonth(date)</span></li>
+        <li><span>获取指定日期是星期几 dayofweek(date) 周日~周六：1~7</span></li>
+        <li><span>获取指定日期是该年的第多少天 dayofyear(date)</span></li>
+        <li><span>指定日期的指定部分加值后的日期 adddate(date,interval n format) ---format=&#39;day,month,year,second,minute....&#39;
+            </span></li>
+        <li><span>指定日期的指定部分减值后的日期 subdate(date,interval n format)
+                ---format=&#39;day,month,year,second,minute....&#39;</span></li>
+        <li><span>获取指定日期的星期索引 weekday(date) 周一~周日：0~6</span></li>
+        <li><span>获取两个日期的间隔天数差 datediff(dateBig, dateSmall) ；</span></li>
+    </ul>
+    <h4><a name="数学函数" class="md-header-anchor"></a><span>数学函数</span></h4>
+    <ul>
+        <li><span>求绝对值 abs(num);</span></li>
+        <li><span>向上取整 ceil(decimal);decimal=&#39;0.04...&#39;</span></li>
+        <li><span>向下取整 floor(decimal);</span></li>
+    </ul>
+    <h4><a name="聚合函数" class="md-header-anchor"></a><span>聚合函数</span></h4>
+    <ul>
+        <li><span>计数 count(1/*/field_name) </span></li>
+        <li><span>// count( * ）对行数目计数，count(字段名)对字段名不为空的计数</span></li>
+        <li><span>求和 sum(num) </span></li>
+        <li><span>均值 avg(num)</span></li>
+        <li><span>最大值 max(num)</span></li>
+        <li><span>最小值 min(num)</span></li>
+    </ul>
+    <h2><a name="六事务---transaction" class="md-header-anchor"></a><span>六：事务 : Transaction</span></h2>
+    <h4><a name="1为了保证数据的一致性" class="md-header-anchor"></a><span>1.为了保证数据的一致性</span></h4>
+    <h4><a name="2应用场景多条增删改语句构成复合业务" class="md-header-anchor"></a><span>2.应用场景：多条增，删，改语句构成复合业务</span></h4>
+    <h4><a name="3事务的保障" class="md-header-anchor"></a><span>3.事务的保障</span></h4>
+    <ul>
+        <li><span>commit </span><span> </span><span>提交数据---&gt;将操作从缓存中持久化（落盘）到磁盘文件</span></li>
+        <li><span>rollback 回滚数据---&gt;将本次事务中的操作结果从缓存中清除</span></li>
+    </ul>
+    <p>&nbsp;</p>
+</div>
+</body>
+

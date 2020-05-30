@@ -1,0 +1,168 @@
+/*
+#085f63 #49beb7 #facf5a #ff5959
+#fffeec #aeddcd #e4508f #556fb5
+#a1dd70 #fdfff0 #e8ecd6 #a23131
+#c1224f #f16f6f #94d2e6 #fff78f
+#ff6473 #757882 #5cc1b3 #6ef7c8
+#ffeaa5 #fe5f55 #c7efcf #eef5db
+#f9fa9b #ff7777 #ceecf0 #f0f3f3
+#92e6e6 #fff9af #d65d7a #524c84
+#fff9e0 #f1c550 #ff6600 #ce2525
+#a8e6cf #fdffab #ffd3b6 #ffaaa5
+*/
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, rgb(181, 154, 254), rgb(245, 189, 253)) fixed;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    /* height: 30rem; */
+    overflow: hidden;
+    box-shadow: 0 0 20px #ddd;
+
+}
+
+.color {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.color1 {
+    height: 100%;
+    width: 13%;
+    background-color: #ccf0e1;
+}
+
+.color2 {
+    height: 100%;
+    width: 23%;
+    background-color: #f8fab8;
+}
+
+.color3 {
+    height: 100%;
+    width: 33%;
+    background-color: #f8dc88;
+}
+
+.color4 {
+    height: 100%;
+    width: 40%;
+    background-color: #f76a8c;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    /* width: 65rem; */
+    /* overflow: hidden; */
+
+}
+
+.switch span {
+    color: rgb(238, 238, 238);
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.switch span.active {
+    color: #b7efcd;
+}
+
+.panel {
+    width: 30%;
+    margin: 10rem 0 0;
+    position: absolute;
+    right: 10mm;
+    top: -10mm;
+    display: flex;
+    justify-content: center;
+
+}
+
+form {
+    width: 14rem;
+    /* height: 17rem; */
+    margin: 2rem 0 0;
+}
+
+form .input {
+    position: relative;
+    opacity: 1;
+    height: 2rem;
+    width: 100%;
+    margin: 2rem 0;
+    transition: .6s;
+}
+
+.input input {
+    outline: none;
+    width: 100%;
+    border: none;
+    border-bottom: .15rem solid rgb(255, 208, 199);
+    background-color: transparent;
+    color: azure;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.input::after {
+    content: attr(placeholder);
+    position: absolute;
+    left: 0;
+    top: -20%;
+    font-size: 1.3rem;
+    color: #eee;
+    transition: .3s;
+}
+
+.input.focus::after {
+    top: -70%;
+    font-size: 1rem;
+}
+
+.login .input#email,
+.login .input#repeat {
+    margin: 0;
+    height: 0;
+    opacity: 0;
+}
+
+
+form span {
+    display: block;
+    color: azure;
+    font-weight: 400;
+    font-size: .8rem;
+    cursor: pointer;
+}
+
+form button {
+    border: none;
+    outline: none;
+    margin: 2rem 0 0;
+    letter-spacing: 3mm;
+    font-size: large;
+    width: 100%;
+    height: 3.5rem;
+    border-radius: 3rem;
+    background-color: #f6d186;
+    box-shadow: 0 0 8px rgb(254, 154, 154);
+    cursor: pointer;
+    color: azure;
+}
