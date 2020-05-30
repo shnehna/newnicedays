@@ -11,10 +11,10 @@ spring:
     timeout: 0
     jedis:
       pool:
-        max-active: 100 #×î´óÁ¬½ÓÊı ¸ºÊıÃ»ÓÃÏŞÖÆ
-        max-idle: 10 #×î´ó¿ÕÏĞÁ¬½Ó
-        max-wait: 100000 #×î´ó×èÈûµÈ´ıÊ±¼ä
-    database: 0 #Êı¾İ¿âË÷Òı Ä¬ÈÏ0
+        max-active: 100 #æœ€å¤§è¿æ¥æ•° è´Ÿæ•°æ²¡ç”¨é™åˆ¶
+        max-idle: 10 #æœ€å¤§ç©ºé—²è¿æ¥
+        max-wait: 100000 #æœ€å¤§é˜»å¡ç­‰å¾…æ—¶é—´
+    database: 0 #æ•°æ®åº“ç´¢å¼• é»˜è®¤0
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
@@ -25,17 +25,17 @@ server:
 #mybatis
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
-  #ÊµÌåÉ¨Ãè£¬¶à¸öpackageÓÃ¶ººÅ»òÕß·ÖºÅ·Ö¸ô
+  #å®ä½“æ‰«æï¼Œå¤šä¸ªpackageç”¨é€—å·æˆ–è€…åˆ†å·åˆ†éš”
   typeAliasesPackage: com.shenhan.nicedays.modules.*.entity
   global-config:
-    #Êı¾İ¿âÏà¹ØÅäÖÃ
+    #æ•°æ®åº“ç›¸å…³é…ç½®
     db-config:
-      #Ö÷¼üÀàĞÍ  AUTO:"Êı¾İ¿âID×ÔÔö", INPUT:"ÓÃ»§ÊäÈëID", ID_WORKER:"È«¾ÖÎ¨Ò»ID (Êı×ÖÀàĞÍÎ¨Ò»ID)", UUID:"È«¾ÖÎ¨Ò»ID UUID";
+      #ä¸»é”®ç±»å‹  AUTO:"æ•°æ®åº“IDè‡ªå¢", INPUT:"ç”¨æˆ·è¾“å…¥ID", ID_WORKER:"å…¨å±€å”¯ä¸€ID (æ•°å­—ç±»å‹å”¯ä¸€ID)", UUID:"å…¨å±€å”¯ä¸€ID UUID";
       id-type: AUTO
       logic-delete-value: -1
       logic-not-delete-value: 0
     banner: false
-  #Ô­ÉúÅäÖÃ
+  #åŸç”Ÿé…ç½®
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
